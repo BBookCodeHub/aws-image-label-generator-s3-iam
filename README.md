@@ -120,9 +120,119 @@ The application performs the following steps:
 7. Displays the annotated image alongside detection results.
 
 ---
+## Results
 
-## Sample Output
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/aws-image-gen-result.jpeg" width="500"><br>
+      <b>Object Detection Output</b>
+    </td>
+    <td align="center">
+      <img src="screenshots/aws-image-gen-script.jpeg" width="500"><br>
+      <b>Python Script</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/aws-image-gen-iam.jpeg" width="500"><br>
+      <b>IAM Configuration</b>
+    </td>
+    <td align="center">
+      <img src="screenshots/aws-image-gen-s3.jpeg" width="500"><br>
+      <b>Amazon S3 Bucket</b>
+    </td>
+  </tr>
+</table>
 
+---
+## Code Snippet & Sample Output
+**Python Script**
+```python
+import boto3
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from PIL import Image
+from io import BytesIO
+
+def detect_labels(photo, bucket):
+    # Create a Rekognition client
+    client = boto3.client('rekognition')
+
+    # Detect labels in the photo
+    response = client.detect_labels(
+        Image={'S3Object': {'Bucket': bucket, 'Name': photo}},
+        MaxLabels=10)
+
+    # Print detected labels
+    print('Detected labels for ' + photo)
+    print()
+    for label in response['Labels']:
+        print("Label:", label['Name'])
+        print("Confidence:", label['Confidence'])
+        print()
+
+    # Load the image from S3
+    s3 = boto3.resource('s3')
+    obj = s3.Object(bucket, photo)
+    img_data = obj.get()['Body'].read()
+    img = Image.open(BytesIO(img_data))
+
+    # Display the image with bounding boxes
+    plt.imshow(img)
+    ax = plt.gca()
+
+    for label in response['Labels']:
+        for instance in label.get('Instances', []):
+            bbox = instance['BoundingBox']
+            left = bbox['Left'] * img.width
+            top = bbox['Top'] * img.height
+            width = bbox['Width'] * img.width
+            height = bbox['Height'] * img.height
+
+            rect = patches.Rectangle(
+                (left, top),
+                width,
+                height,
+                linewidth=1,
+                edgecolor='r',
+                facecolor='none'
+            )
+
+            ax.add_patch(rect)
+
+            label_text = (
+                label['Name']
+                + ' ('
+                + str(round(label['Confidence'], 2))
+                + '%)'
+            )
+
+            plt.text(
+                left,
+                top - 2,
+                label_text,
+                color='r',
+                fontsize=8,
+                bbox=dict(facecolor='white', alpha=0.7)
+            )
+
+    plt.show()
+
+    return len(response['Labels'])
+
+def main():
+    photo = 'city-aws.jpg'
+    bucket = 'aws-image-rekognition-bb'
+
+    label_count = detect_labels(photo, bucket)
+
+    print("Labels detected:", label_count)
+
+if __name__ == "__main__":
+    main()
+```
+**Identified objects & confidence scores**
 ```
 Detected labels for city-aws.jpg
 
@@ -140,38 +250,6 @@ Confidence: 97.44
 
 Labels detected: 10
 ```
-
----
-
-## Results
-
-### Object Detection
-
-> Replace this placeholder with a screenshot of your application.
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/aws-image-gen-result.png" width="400"><br>
-      <b>Image Recognition Output</b>
-    </td>
-    <td align="center">
-      <img src="screenshots/aws-image-gen-script.png" width="400"><br>
-      <b>Python Script</b>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/aws-image-gen-iam.png" width="400"><br>
-      <b>IAM Configuration</b>
-    </td>
-    <td align="center">
-      <img src="screenshots/aws-image-gen-s3.png" width="400"><br>
-      <b>Amazon S3 Bucket</b>
-    </td>
-  </tr>
-</table>
-
 
 ---
 
