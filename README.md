@@ -44,11 +44,8 @@ The solution showcases cloud-native development, secure AWS service integration,
 
 ## Architecture
 
-> *Replace the image below with your architecture diagram.*
+![Architectural Diagram](screenshots/architectural-diagram.png)
 
-<p align="center">
-<img src="images/architecture-diagram.png" width="850">
-</p>
 
 ### Workflow
 
