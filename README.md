@@ -1,0 +1,1 @@
+# aws-image-label-generator-s3-iam
