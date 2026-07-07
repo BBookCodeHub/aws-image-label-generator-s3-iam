@@ -2,13 +2,13 @@
 
 A Python-based computer vision application that leverages Amazon Rekognition to automatically detect, classify, and annotate objects within images stored in Amazon S3.
 
+**Completed:** May'25
+
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
 ![AWS](https://img.shields.io/badge/AWS-Rekognition-orange?logo=amazonaws)
 ![Amazon S3](https://img.shields.io/badge/Amazon-S3-red?logo=amazons3)
 ![Amazon IAM](https://img.shields.io/badge/Amazon-IAM-orange?logo=amazonaws)
 ![Boto3](https://img.shields.io/badge/Boto3-AWS%20SDK-yellow)
-
-**Completed:** May'25
 
 ---
 
