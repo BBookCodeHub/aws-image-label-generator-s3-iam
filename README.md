@@ -152,25 +152,26 @@ Labels detected: 10
 <table>
   <tr>
     <td align="center">
-      <img src="screenshots/aws-image-gen-result.png" width="800"><br>
-      <b>Image recognition output</b>
+      <img src="screenshots/aws-image-gen-result.png" width="400"><br>
+      <b>Image Recognition Output</b>
     </td>
     <td align="center">
-      <img src="screenshots/aws-image-gen-script.png" width="800"><br>
+      <img src="screenshots/aws-image-gen-script.png" width="400"><br>
       <b>Python Script</b>
     </td>
   </tr>
-   <tr>
+  <tr>
     <td align="center">
-      <img src="screenshots/aws-image-gen-iam.png" width="800"><br>
-      <b>IAM Setup</b>
+      <img src="screenshots/aws-image-gen-iam.png" width="400"><br>
+      <b>IAM Configuration</b>
     </td>
     <td align="center">
-      <img src="screenshots/aws-image-gen-s3.png" width="800"><br>
-      <b>S3 Bucket</b>
+      <img src="screenshots/aws-image-gen-s3.png" width="400"><br>
+      <b>Amazon S3 Bucket</b>
     </td>
   </tr>
 </table>
+
 
 ---
 
